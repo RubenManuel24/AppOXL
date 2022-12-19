@@ -9,8 +9,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 class MeusAnuncios extends StatefulWidget {
 
-  @override
-  State<MeusAnuncios> createState() => _MeusAnunciosState();
+   @override
+   State<MeusAnuncios> createState() => _MeusAnunciosState();
 }
 
 class _MeusAnunciosState extends State<MeusAnuncios> {

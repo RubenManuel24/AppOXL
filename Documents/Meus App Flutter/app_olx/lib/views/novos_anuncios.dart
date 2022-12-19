@@ -374,7 +374,7 @@ BuildContext _dialogcontext;
                         onChanged: (valor){
                            //print("Estado: $valor");
                            setState((){
-                              _listaDeProvincia = valor;
+                              _listaDeCategoria = valor;
                            });
                          }
                        ),
