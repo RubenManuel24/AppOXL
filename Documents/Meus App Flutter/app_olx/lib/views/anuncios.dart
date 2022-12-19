@@ -120,7 +120,7 @@ class _AnunciosState extends State<Anuncios> {
                     ),
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.bold
                     ),
                     value: _itemSelecionadoCategoria,
@@ -156,7 +156,7 @@ class _AnunciosState extends State<Anuncios> {
                     ),
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: 18,
+                      fontSize: 19,
                       fontWeight: FontWeight.bold
                     ),
                     value: _itemSelecionadoProvincia,
