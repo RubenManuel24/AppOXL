@@ -16,18 +16,17 @@ class Anuncios extends StatefulWidget {
 
 class _AnunciosState extends State<Anuncios> {
 
-
+  FirebaseFirestore db = FirebaseFirestore.instance;
   List<DropdownMenuItem<String>> _listaDeProvincia = [];
   List<DropdownMenuItem<String>> _listaDeCategoria = [];
   String _itemSelecionadoProvincia;
   String _itemSelecionadoCategoria;
   List<String> _listItemMenu = [];
 
-  final _controllerStream = StreamController<QuerySnapshot>.broadcast();
+  var _controllerStream = StreamController<QuerySnapshot>.broadcast();
 
   Future<Stream<QuerySnapshot>> _adicionarListernerAnuncios() async {
       
-      FirebaseFirestore db = FirebaseFirestore.instance;
       Stream<QuerySnapshot> stream = db
         .collection("anuncios")
         .snapshots();
@@ -37,17 +36,16 @@ class _AnunciosState extends State<Anuncios> {
       });
   }
 
-  Future<Stream<QuerySnapshot>> _filtrarAnuncios() async {
+  Future<Stream<QuerySnapshot>> _filtrarAnuncios({ String provincia, String categoria}) async {
       
-      FirebaseFirestore db = FirebaseFirestore.instance;
-      Query query = db .collection("anuncios");
+      Query query = db.collection("anuncios");
 
-      if(_itemSelecionadoProvincia != null){
-         query = query.where("provincia", isEqualTo: _itemSelecionadoProvincia);
+      if(provincia != null){
+         query = query.where("provincia", isEqualTo: provincia.toString());
       }
 
-      if(_itemSelecionadoCategoria != null){
-         query = query.where("categoria", isEqualTo: _itemSelecionadoCategoria);
+      if(categoria != null){
+         query = query.where("categoria", isEqualTo: categoria.toString());
       }
   
       Stream<QuerySnapshot> stream = query.snapshots();
@@ -166,10 +164,12 @@ class _AnunciosState extends State<Anuncios> {
                     ),
                     value: _itemSelecionadoCategoria,
                     items: _listaDeProvincia, 
-                    onChanged: (valor){
+                    onChanged: (provincia){
                       setState(() {
-                        _itemSelecionadoCategoria = valor;
-                        _filtrarAnuncios();
+                        _itemSelecionadoCategoria = provincia;
+                        _filtrarAnuncios(
+                          provincia: provincia
+                        );
                       });
                        
                     }
@@ -191,7 +191,7 @@ class _AnunciosState extends State<Anuncios> {
                     child: DropdownButton(
                     iconEnabledColor: Color(0xff9c27b0) ,
                     isExpanded: true,
-                    hint: Text("Categoia",
+                    hint: Text("Categoria",
                     style: TextStyle(
                       color:Color(0xff9c27b0) 
                      ),
@@ -203,10 +203,11 @@ class _AnunciosState extends State<Anuncios> {
                     ),
                     value: _itemSelecionadoProvincia,
                     items: _listaDeCategoria, 
-                    onChanged: (valor){
+                    onChanged: (categoria){
                       setState(() {
-                        _itemSelecionadoProvincia = valor;
-                        _filtrarAnuncios();
+                        _itemSelecionadoProvincia = categoria;
+                        _filtrarAnuncios(
+                          categoria: categoria);
                       });
                        
                     }
@@ -229,7 +230,7 @@ class _AnunciosState extends State<Anuncios> {
              QuerySnapshot querySnapshot = snapshot.data;
              if(snapshot != null && snapshot.hasData ){
 
-                  if(querySnapshot.docs.isEmpty){
+                if(querySnapshot.docs.isEmpty){
                   return Container(
                       padding: EdgeInsets.all(20),
                         child: Text("Nenhum anúncio!",
@@ -262,7 +263,6 @@ class _AnunciosState extends State<Anuncios> {
              }
              return Container();
                
-              
             }
 
           }
