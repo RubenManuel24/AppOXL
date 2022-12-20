@@ -25,7 +25,7 @@ class _AnunciosState extends State<Anuncios> {
 
   final _controllerStream = StreamController<QuerySnapshot>.broadcast();
 
-  Future<Stream<QuerySnapshot>> _adicionarListernerAnuncio() async {
+  Future<Stream<QuerySnapshot>> _adicionarListernerAnuncios() async {
       
       FirebaseFirestore db = FirebaseFirestore.instance;
       Stream<QuerySnapshot> stream = db
@@ -36,6 +36,26 @@ class _AnunciosState extends State<Anuncios> {
          _controllerStream.add(dados);
       });
   }
+
+  Future<Stream<QuerySnapshot>> _filtrarAnuncios() async {
+      
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      Query query = db .collection("anuncios");
+
+      if(_itemSelecionadoProvincia != null){
+         query = query.where("provincia", isEqualTo: _itemSelecionadoProvincia);
+      }
+
+      if(_itemSelecionadoCategoria != null){
+         query = query.where("categoria", isEqualTo: _itemSelecionadoCategoria);
+      }
+  
+      Stream<QuerySnapshot> stream = query.snapshots();
+      stream.listen((dados) { 
+         _controllerStream.add(dados);
+      });
+  }
+
 
   _escolhaMenuItem(String listItemMenu){
 
@@ -95,7 +115,7 @@ class _AnunciosState extends State<Anuncios> {
   void initState() {
     super.initState();
     _verificarUsuarioLogado();
-    _adicionarListernerAnuncio();
+    _adicionarListernerAnuncios();
     _capturandoTextsProvinciaCategoria();
     
   }
@@ -149,6 +169,7 @@ class _AnunciosState extends State<Anuncios> {
                     onChanged: (valor){
                       setState(() {
                         _itemSelecionadoCategoria = valor;
+                        _filtrarAnuncios();
                       });
                        
                     }
@@ -185,6 +206,7 @@ class _AnunciosState extends State<Anuncios> {
                     onChanged: (valor){
                       setState(() {
                         _itemSelecionadoProvincia = valor;
+                        _filtrarAnuncios();
                       });
                        
                     }
@@ -207,7 +229,7 @@ class _AnunciosState extends State<Anuncios> {
              QuerySnapshot querySnapshot = snapshot.data;
              if(snapshot != null && snapshot.hasData ){
 
-                  if(querySnapshot.docs.length == 0){
+                  if(querySnapshot.docs.isEmpty){
                   return Container(
                       padding: EdgeInsets.all(20),
                         child: Text("Nenhum anúncio!",
