@@ -224,6 +224,18 @@ class _AnunciosState extends State<Anuncios> {
             switch(snapshot.connectionState){
               case ConnectionState.none:
               case ConnectionState.waiting: 
+                return Center(
+                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      backgroundColor: Color(0xff9c27b0),
+                      color: Colors.white,
+                      ),
+                    Text("Carregando os dados...")
+                  ],
+                ),
+              );
               case ConnectionState.active:
               case ConnectionState.done:
              
@@ -254,17 +266,21 @@ class _AnunciosState extends State<Anuncios> {
                   return  ItemCustomizada(
                     anuncioProduto: anuncioProduto,
                     itemOnTap: (){
-
+                      Navigator.pushNamed(
+                        context,
+                         RouteGenerator.ROUTE_DETALHE_ANUNCIOS,
+                         arguments: anuncioProduto
+                         );
                     },
                   );
 
                 })
                 );
              }
-             return Container();
+             
                
             }
-
+               return Container();
           }
           )
 

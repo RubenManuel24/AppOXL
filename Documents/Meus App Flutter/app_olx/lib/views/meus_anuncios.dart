@@ -93,7 +93,10 @@ _idUsuarioLogado() async {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    CircularProgressIndicator(backgroundColor: Color(0xff9c27b0),),
+                    CircularProgressIndicator(
+                      backgroundColor: Color(0xff9c27b0),
+                      color: Colors.white,
+                      ),
                     Text("Carregando os dados...")
                   ],
                 ),

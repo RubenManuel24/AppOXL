@@ -1,4 +1,5 @@
 import 'package:app_olx/views/anuncios.dart';
+import 'package:app_olx/views/detalhe_anuncio.dart';
 import 'package:app_olx/views/login.dart';
 import 'package:app_olx/views/meus_anuncios.dart';
 import 'package:app_olx/views/novos_anuncios.dart';
@@ -11,6 +12,7 @@ class RouteGenerator {
   static const String ROUTE_LOGIN = "/login";
   static const String ROUTE_MEUS_ANUNCIOS = "/meusAnuncios";
   static const String ROUTE_NOVOS_ANUNCIOS = "/novosAnuncios";
+  static const String ROUTE_DETALHE_ANUNCIOS = "/detalheAnuncios";
   
   static Route<dynamic> generateRoute(RouteSettings settings){
     final args = settings.arguments;
@@ -28,6 +30,9 @@ class RouteGenerator {
       case ROUTE_NOVOS_ANUNCIOS : 
         return MaterialPageRoute(
           builder: (context) => NovosAnuncios() );
+     case ROUTE_DETALHE_ANUNCIOS : 
+        return MaterialPageRoute(
+          builder: (context) => DetalheAnuncio(args) );
       default : {
         return _errorRoute();
       }
