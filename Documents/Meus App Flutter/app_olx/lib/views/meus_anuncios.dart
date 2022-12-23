@@ -75,12 +75,14 @@ _idUsuarioLogado() async {
         backgroundColor: Color(0xff9c27b0),
         title: Text("Meus Anúncios"),
       ),
-      floatingActionButton:FloatingActionButton(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton:FloatingActionButton.extended(
         backgroundColor: Color(0xff9c27b0),
         onPressed: (){
            Navigator.pushNamed(context, RouteGenerator.ROUTE_NOVOS_ANUNCIOS);
         },
-        child: Icon(Icons.add, color: Colors.white,),
+        icon: Icon(Icons.add, color: Colors.white,),
+        label: Text("Adicionar"),
         
         ),
       body:StreamBuilder(
@@ -111,7 +113,8 @@ _idUsuarioLogado() async {
               
            QuerySnapshot querySnapshot = snapshot.data;
 
-            return ListView.builder(
+            return Padding(padding: EdgeInsets.only(bottom: 15),
+             child:  ListView.builder(
                 itemCount: querySnapshot.docs.length,
                 itemBuilder: (_, index){
 
@@ -168,7 +171,8 @@ _idUsuarioLogado() async {
                     
                   );
               }
-           ) ;       
+           ) ,
+            );       
           }
         })
     );

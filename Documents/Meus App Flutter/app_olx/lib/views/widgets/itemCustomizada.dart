@@ -44,8 +44,9 @@ class ItemCustomizada extends StatelessWidget {
                           ),
                           textAlign: TextAlign.start
                       ),
-                      Text("Kz ${anuncioProduto.getPreco}",
+                      Text("Kz ${anuncioProduto.getPreco},00",
                        style: TextStyle(
+                        color: Colors.green,
                             fontSize: 14
                           ),
                       ), 

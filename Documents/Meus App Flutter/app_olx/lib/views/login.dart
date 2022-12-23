@@ -154,6 +154,7 @@ class _LoginState extends State<Login> {
                     _validarCampos();
                     }
                   ),
+                 
                  SizedBox(height: 10),
                  Text(_mensagemErro,
                   style: TextStyle(

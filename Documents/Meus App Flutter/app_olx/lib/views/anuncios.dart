@@ -236,6 +236,7 @@ class _AnunciosState extends State<Anuncios> {
                   ],
                 ),
               );
+              break;
               case ConnectionState.active:
               case ConnectionState.done:
              
