@@ -1,6 +1,9 @@
 import 'package:app_olx/models/anuncios.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 class DetalheAnuncio extends StatefulWidget {
   final AnuncioProduto anuncioProduto;
   
@@ -31,6 +34,12 @@ AnuncioProduto _anuncioProdutoDetalhe;
  //}
 }
 
+Future _ligarVendedor(String telefone) async {
+  if(await canLaunchUrl(Uri( scheme: "tel" , path: telefone, ))) {
+      await launchUrl(Uri( scheme: "tel" , path: telefone,));
+  }
+}
+
 @override
   void initState() {
     super.initState();
@@ -45,7 +54,9 @@ AnuncioProduto _anuncioProdutoDetalhe;
       ),
       body: Stack(
         children: <Widget>[
-          //Imagem Carosel
+          ListView(
+            children: [
+              //Imagem Carosel
            SizedBox(
                child: CarouselSlider(
                items: _getDeListaImagens(),
@@ -58,10 +69,86 @@ AnuncioProduto _anuncioProdutoDetalhe;
                 //height: double.
                ) ,
               ),
+             ),
+
+          Container(
+           
+           padding: EdgeInsets.all(16),
+           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+           children: [
+            //preco
+            Text("KZ ${_anuncioProdutoDetalhe.getPreco}",
+             style: TextStyle(
+              color: Color(0xff9c27b0),
+              fontSize: 22,
+              fontWeight: FontWeight.w400
              )
+            ),
+            //Titulo
+            Text("${_anuncioProdutoDetalhe.getTitulo}",
+               style: TextStyle(
+               fontSize: 25,
+             )
+            ),
+            Padding(padding: EdgeInsets.symmetric(vertical: 15),
+            child: Divider(),
+            ),
+            //Descriacao
+            Text("Descrição",
+            style: TextStyle(
+             fontWeight: FontWeight.bold
+            ),
+            ),
+            Text("${_anuncioProdutoDetalhe.getDescriacao}"),
+            Padding(padding: EdgeInsets.symmetric(vertical: 15),
+            child: Divider(),
+            ),
+            //Contato
+            Text("Contato",
+            style: TextStyle(
+             fontWeight: FontWeight.bold
+            ),
+            ),
+            Text("${_anuncioProdutoDetalhe.getTelefone}"),
+          ],
+          )
+        ),
+            ]
+          ),
           
-        ],
-      ),
-    );
-  }
+        //Botao
+        Positioned(
+          bottom: 16,
+          right: 16,
+          left: 16,
+          child: TextButton(
+            onPressed: (){
+              _ligarVendedor(_anuncioProdutoDetalhe.getTelefone);
+            }, 
+            child: Text("Ligar",
+            style: TextStyle(
+              color:Colors.white
+            )
+            ),
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                EdgeInsets.fromLTRB(32, 16, 32, 16)
+              ),
+              backgroundColor: MaterialStateProperty.all<Color>(
+                Color(0xff9c27b0)
+              ),
+              shape:  MaterialStateProperty.all<RoundedRectangleBorder>(
+                RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20)
+                )
+              )
+            ),
+            ),
+         )
+     ],
+    ),
+   );
+ }
 }

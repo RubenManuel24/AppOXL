@@ -43,6 +43,7 @@ dependencies:
   brasil_fields: ^1.8.0
   validadores: ^0.0.1
   carousel_slider: ^4.2.1
+  url_launcher: ^6.1.7
   
 
 

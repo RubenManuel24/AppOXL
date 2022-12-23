@@ -35,6 +35,7 @@ class ItemCustomizada extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                       Text(
                             anuncioProduto.getTitulo,
