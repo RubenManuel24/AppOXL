@@ -123,7 +123,7 @@ class _AnunciosState extends State<Anuncios> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff9c27b0),
-        title: Text("OXL"),
+        title: Text("OLX"),
         actions: [
           PopupMenuButton(
             onSelected: _escolhaMenuItem,
